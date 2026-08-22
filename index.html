@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>01 Suítes — Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--red:#E8421A;--bg:#0A0A0A;--card:#131313;--card2:#1A1A1A;--border:rgba(255,255,255,.08);--gray:#888}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column}
+header{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px;
+  border-bottom:1px solid var(--border)}
+header b{letter-spacing:.5px}
+main{max-width:640px;margin:0 auto;padding:40px 16px;width:100%;flex:1}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px}
+h1{font-size:18px;margin-bottom:18px}
+h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:12px 0 4px}
+input{width:100%;background:var(--card2);color:#fff;border:1px solid var(--border);border-radius:6px;
+  padding:10px 12px;font-family:'Inter';font-size:13px}
+input:focus{outline:none;border-color:var(--red)}
+button{background:var(--red);color:#fff;border:none;border-radius:6px;padding:10px 16px;font-size:13px;
+  font-weight:600;cursor:pointer;font-family:'Inter';margin-top:16px}
+button.ghost{background:none;border:1px solid var(--border);color:var(--gray)}
+.erro{color:#ff6b6b;font-size:12px;margin-top:10px;display:none}
+.lista a{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;margin-bottom:6px;
+  background:var(--card2);border-radius:6px;color:#fff;text-decoration:none;font-size:13px;cursor:pointer}
+.lista a:hover{background:#222}
+.lista .data{color:var(--gray);font-size:11px}
+.vazio{color:#555;font-size:12px;padding:8px 0}
+#tela-login,#tela-app{display:none}
+footer{text-align:center;color:#444;font-size:11px;padding:20px}
+</style>
+</head>
+<body>
+<header><b>01 SUÍTES · PULSAR 2.0</b><span id="quem" style="font-size:12px;color:var(--gray)"></span></header>
+<main>
+
+  <div id="tela-login" class="card">
+    <h1>Entrar</h1>
+    <label>E-mail</label>
+    <input id="in-email" type="email" autocomplete="username">
+    <label>Senha</label>
+    <input id="in-senha" type="password" autocomplete="current-password">
+    <div class="erro" id="erro-login"></div>
+    <button id="btn-entrar">Entrar</button>
+  </div>
+
+  <div id="tela-app">
+    <div class="card">
+      <h2>Relatórios</h2>
+      <div class="lista" id="lista-principais"></div>
+    </div>
+    <div class="card">
+      <h2>Acertos de proprietários</h2>
+      <div class="lista" id="lista-acertos"></div>
+    </div>
+    <div class="card">
+      <h2>PriceLabs</h2>
+      <div class="lista" id="lista-pricelabs"></div>
+    </div>
+    <button class="ghost" id="btn-sair">Sair</button>
+  </div>
+
+</main>
+<footer>Acesso restrito à equipe · contas criadas manualmente no Supabase</footer>
+<script>
+// A "anon key" é segura para expor no navegador — o acesso real é controlado
+// pelo login (Supabase Auth) e pela Edge Function, que confere o token antes
+// de buscar qualquer relatório no Storage.
+const SUPABASE_URL = "https://bglldtpywgqmyjvklxau.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnbGxkdHB5d2dxbXlqdmtseGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNTQ3MzYsImV4cCI6MjEwMjkzMDczNn0.zDCHkDFj4XG3VJfGCs6p44SWlU92mufdojlQCKc4Fr4";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const $ = id => document.getElementById(id);
+
+async function mostrarTela() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    $('tela-login').style.display = 'none';
+    $('tela-app').style.display = 'block';
+    $('quem').textContent = session.user.email;
+    await carregarRelatorios(session.access_token);
+  } else {
+    $('tela-login').style.display = 'block';
+    $('tela-app').style.display = 'none';
+    $('quem').textContent = '';
+  }
+}
+
+$('btn-entrar').onclick = async () => {
+  $('erro-login').style.display = 'none';
+  const { error } = await sb.auth.signInWithPassword({
+    email: $('in-email').value.trim(),
+    password: $('in-senha').value,
+  });
+  if (error) {
+    $('erro-login').textContent = error.message;
+    $('erro-login').style.display = 'block';
+    return;
+  }
+  await mostrarTela();
+};
+
+$('btn-sair').onclick = async () => {
+  await sb.auth.signOut();
+  await mostrarTela();
+};
+
+// O Storage (e a própria Edge Function, se navegada direto) do Supabase
+// força qualquer resposta parecida com HTML a virar text/plain com uma
+// Content-Security-Policy travada (proteção anti-phishing da plataforma) —
+// por isso o relatório é buscado via fetch (que não sofre essa restrição) e
+// aberto como Blob local, cujo Content-Type quem decide é o navegador.
+const FUNCTION_URL = SUPABASE_URL + "/functions/v1/portal";
+async function abrirRelatorio(caminho, accessToken) {
+  const resp = await fetch(`${FUNCTION_URL}?path=${encodeURIComponent(caminho)}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (!resp.ok) {
+    alert('Não consegui abrir esse relatório: ' + (await resp.text()));
+    return;
+  }
+  const html = await resp.text();
+  const blobUrl = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+  window.open(blobUrl, '_blank');
+}
+
+async function carregarRelatorios(accessToken) {
+  const principais = $('lista-principais');
+  principais.innerHTML = '';
+  for (const [nome, arq] of [['Dashboard', 'dashboard.html'], ['Operação', 'operacao.html']]) {
+    const a = document.createElement('a');
+    a.innerHTML = `${nome} <span class="data">abrir ▸</span>`;
+    a.onclick = () => abrirRelatorio(arq, accessToken);
+    principais.appendChild(a);
+  }
+
+  // Acertos: um subdiretório por mês (AAAA-MM), cada um com Resumo.html.
+  const listaAc = $('lista-acertos');
+  listaAc.innerHTML = '';
+  const { data: meses, error } = await sb.storage.from('reports').list('acertos', { sortBy: { column: 'name', order: 'desc' } });
+  if (error || !meses || !meses.length) {
+    listaAc.innerHTML = '<div class="vazio">Nenhum acerto publicado ainda.</div>';
+  } else {
+    for (const m of meses) {
+      const a = document.createElement('a');
+      a.innerHTML = `${m.name} <span class="data">Resumo ▸</span>`;
+      a.onclick = () => abrirRelatorio(`acertos/${m.name}/Resumo.html`, accessToken);
+      listaAc.appendChild(a);
+    }
+  }
+
+  // PriceLabs: pricelabs/daily-AAAA-MM-DD.html e pricelabs/historico-AAAA-MM-DD.html.
+  const listaPl = $('lista-pricelabs');
+  listaPl.innerHTML = '';
+  const { data: arqsPl, error: errPl } = await sb.storage.from('reports').list('pricelabs', { sortBy: { column: 'name', order: 'desc' } });
+  if (errPl || !arqsPl || !arqsPl.length) {
+    listaPl.innerHTML = '<div class="vazio">Nenhum relatório do PriceLabs publicado ainda.</div>';
+  } else {
+    for (const f of arqsPl.slice(0, 14)) {
+      const tipo = f.name.startsWith('daily-') ? 'Diário' : f.name.startsWith('historico-') ? 'Histórico' : f.name;
+      const data = f.name.replace(/^(daily|historico)-/, '').replace('.html', '');
+      const a = document.createElement('a');
+      a.innerHTML = `${tipo} — ${data} <span class="data">abrir ▸</span>`;
+      a.onclick = () => abrirRelatorio(`pricelabs/${f.name}`, accessToken);
+      listaPl.appendChild(a);
+    }
+  }
+}
+
+sb.auth.onAuthStateChange(() => mostrarTela());
+mostrarTela();
+</script>
+</body>
+</html>
