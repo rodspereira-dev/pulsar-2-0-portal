@@ -4,33 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>01 Suítes — Portal</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--red:#E8421A;--bg:#0A0A0A;--card:#131313;--card2:#1A1A1A;--border:rgba(255,255,255,.08);--gray:#888}
+:root{--red:#E8421A;--bg:#0A0A0A;--card:#131313;--card2:#1A1A1A;--border:rgba(255,255,255,.08);
+--gray:#888;--gray2:#555;--green:#22C55E;--yellow:#F59E0B}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:#fff;min-height:100vh;display:flex;flex-direction:column}
-header{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:56px;
-  border-bottom:1px solid var(--border)}
-header b{letter-spacing:.5px}
-main{max-width:640px;margin:0 auto;padding:40px 16px;width:100%;flex:1}
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px}
-h1{font-size:18px;margin-bottom:18px}
-h2{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--gray);margin-bottom:10px}
-label{display:block;font-size:12px;color:var(--gray);margin:12px 0 4px}
-input{width:100%;background:var(--card2);color:#fff;border:1px solid var(--border);border-radius:6px;
-  padding:10px 12px;font-family:'Inter';font-size:13px}
-input:focus{outline:none;border-color:var(--red)}
-button{background:var(--red);color:#fff;border:none;border-radius:6px;padding:10px 16px;font-size:13px;
-  font-weight:600;cursor:pointer;font-family:'Inter';margin-top:16px}
-button.ghost{background:none;border:1px solid var(--border);color:var(--gray)}
+header{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:58px;background:rgba(13,13,13,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+header b{letter-spacing:.5px;font-size:13px}
+main{max-width:960px;margin:0 auto;padding:32px 20px 60px;width:100%;flex:1}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px}
+
+/* login */
+#tela-login{max-width:400px;margin:60px auto 0}
+#tela-login h1{font-size:19px;margin-bottom:20px}
+#tela-login label{display:block;font-size:12px;color:var(--gray);margin:14px 0 5px}
+#tela-login input{width:100%;background:var(--card2);color:#fff;border:1px solid var(--border);border-radius:8px;
+  padding:11px 13px;font-family:'Inter';font-size:13px}
+#tela-login input:focus{outline:none;border-color:var(--red)}
+#tela-login button{background:var(--red);color:#fff;border:none;border-radius:8px;padding:11px 18px;font-size:13px;
+  font-weight:700;cursor:pointer;font-family:'Inter';margin-top:18px;width:100%}
 .erro{color:#ff6b6b;font-size:12px;margin-top:10px;display:none}
-.lista a{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;margin-bottom:6px;
-  background:var(--card2);border-radius:6px;color:#fff;text-decoration:none;font-size:13px;cursor:pointer}
-.lista a:hover{background:#222}
-.lista .data{color:var(--gray);font-size:11px}
+button.ghost{background:none;border:1px solid var(--border);color:var(--gray);border-radius:8px;padding:9px 16px;
+  font-size:12px;cursor:pointer;font-family:'Inter'}
+button.ghost:hover{border-color:var(--gray);color:#fff}
+
+/* home */
+#tela-app{display:none}
+.secao-titulo{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);
+  margin:28px 0 12px}
+.secao-titulo:first-child{margin-top:0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.tile{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;cursor:pointer;
+  text-decoration:none;color:#fff;display:block;position:relative;transition:border-color .15s,transform .15s;
+  min-height:104px}
+.tile:hover{border-color:var(--red);transform:translateY(-2px)}
+.tile .tico{font-size:24px;margin-bottom:12px;line-height:1}
+.tile .ttitle{font-size:14px;font-weight:800;margin-bottom:4px}
+.tile .tsub{font-size:11px;color:var(--gray);line-height:1.5}
+.tile .tarrow{position:absolute;top:20px;right:20px;color:var(--gray2);font-size:15px}
+.tile.disabled{opacity:.45;cursor:default;pointer-events:none}
+.link-menor{display:inline-block;margin-top:10px;font-size:11px;color:var(--gray);cursor:pointer;text-decoration:underline}
+.link-menor:hover{color:#fff}
+.lista-antigos{margin-top:10px;display:none}
+.lista-antigos.aberta{display:block}
+.lista-antigos a{display:flex;justify-content:space-between;padding:8px 10px;margin-bottom:4px;background:var(--card2);
+  border-radius:6px;color:#fff;text-decoration:none;font-size:12px;cursor:pointer}
+.lista-antigos a:hover{background:#222}
+
+/* painel de KPIs (PriceLabs diário) */
+.kpi-panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px}
+.kpi-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px}
+.kpi-head .ttitle{font-size:14px;font-weight:800}
+.kpi-head .tsub{font-size:11px;color:var(--gray)}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:16px;margin-bottom:4px}
+.kpi-item .kval{font-size:23px;font-weight:800}
+.kpi-item .klabel{font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.kpi-item.crit .kval{color:var(--red)}
+.kpi-item.warn .kval{color:var(--yellow)}
+.kpi-item.ok .kval{color:var(--green)}
+.kpi-alertas{margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.kpi-alertas .al-titulo{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.al-item{display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:12px;border-bottom:1px dashed var(--border)}
+.al-item:last-child{border-bottom:none}
+.al-item .al-nome{color:#fff}
+.al-item .al-occ{color:var(--red);font-weight:700;white-space:nowrap}
+.kpi-foot{margin-top:16px;font-size:11px}
 .vazio{color:#555;font-size:12px;padding:8px 0}
-#tela-login,#tela-app{display:none}
 footer{text-align:center;color:#444;font-size:11px;padding:20px}
 </style>
 </head>
@@ -49,19 +91,50 @@ footer{text-align:center;color:#444;font-size:11px;padding:20px}
   </div>
 
   <div id="tela-app">
-    <div class="card">
-      <h2>Relatórios</h2>
-      <div class="lista" id="lista-principais"></div>
+    <div class="secao-titulo">Relatórios</div>
+    <div class="tiles">
+      <a class="tile" id="tile-dashboard">
+        <span class="tarrow">▸</span>
+        <div class="tico">📊</div>
+        <div class="ttitle">Dashboard</div>
+        <div class="tsub">Visão executiva, financeira e de portfólio</div>
+      </a>
+      <a class="tile" id="tile-operacao">
+        <span class="tarrow">▸</span>
+        <div class="tico">🧹</div>
+        <div class="ttitle">Operação</div>
+        <div class="tsub">Check-ins, check-outs e limpezas</div>
+      </a>
+      <div class="tile" id="tile-acertos">
+        <span class="tarrow">▸</span>
+        <div class="tico">💰</div>
+        <div class="ttitle">Acertos de Proprietários</div>
+        <div class="tsub" id="acertos-sub">carregando…</div>
+        <span class="link-menor" id="acertos-toggle" style="display:none">ver meses anteriores</span>
+        <div class="lista-antigos" id="acertos-antigos"></div>
+      </div>
+      <div class="tile" id="tile-historico">
+        <span class="tarrow">▸</span>
+        <div class="tico">🕓</div>
+        <div class="ttitle">PriceLabs — Histórico</div>
+        <div class="tsub" id="historico-sub">carregando…</div>
+        <span class="link-menor" id="historico-toggle" style="display:none">ver anteriores</span>
+        <div class="lista-antigos" id="historico-antigos"></div>
+      </div>
     </div>
-    <div class="card">
-      <h2>Acertos de proprietários</h2>
-      <div class="lista" id="lista-acertos"></div>
+
+    <div class="secao-titulo">PriceLabs — Hoje</div>
+    <div class="kpi-panel" id="kpi-panel">
+      <div class="kpi-head">
+        <div>
+          <div class="ttitle">Preço e ocupação</div>
+          <div class="tsub" id="kpi-data">carregando…</div>
+        </div>
+      </div>
+      <div id="kpi-corpo"></div>
     </div>
-    <div class="card">
-      <h2>PriceLabs</h2>
-      <div class="lista" id="lista-pricelabs"></div>
-    </div>
-    <button class="ghost" id="btn-sair">Sair</button>
+
+    <button class="ghost" id="btn-sair" style="margin-top:24px">Sair</button>
   </div>
 
 </main>
@@ -72,17 +145,29 @@ footer{text-align:center;color:#444;font-size:11px;padding:20px}
 // de buscar qualquer relatório no Storage.
 const SUPABASE_URL = "https://bglldtpywgqmyjvklxau.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnbGxkdHB5d2dxbXlqdmtseGF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNTQ3MzYsImV4cCI6MjEwMjkzMDczNn0.zDCHkDFj4XG3VJfGCs6p44SWlU92mufdojlQCKc4Fr4";
+const FUNCTION_URL = SUPABASE_URL + "/functions/v1/portal";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const $ = id => document.getElementById(id);
+const fmtPct = v => (v ?? 0).toFixed(1).replace('.', ',') + '%';
+const fmtR = v => 'R$ ' + Math.round(v || 0).toLocaleString('pt-BR');
+
+// Contador de geração: cada chamada de mostrarTela() pega um número; só a
+// carga mais recente grava na tela. Evita listas duplicadas quando o
+// onAuthStateChange do Supabase dispara mais de uma vez na carga da página
+// (comportamento normal da lib — INITIAL_SESSION + SIGNED_IN, etc.).
+let geracaoAtual = 0;
 
 async function mostrarTela() {
+  const minhaGeracao = ++geracaoAtual;
   const { data: { session } } = await sb.auth.getSession();
+  if (minhaGeracao !== geracaoAtual) return;
+
   if (session) {
     $('tela-login').style.display = 'none';
     $('tela-app').style.display = 'block';
     $('quem').textContent = session.user.email;
-    await carregarRelatorios(session.access_token);
+    await carregarTudo(session.access_token, minhaGeracao);
   } else {
     $('tela-login').style.display = 'block';
     $('tela-app').style.display = 'none';
@@ -114,7 +199,6 @@ $('btn-sair').onclick = async () => {
 // Content-Security-Policy travada (proteção anti-phishing da plataforma) —
 // por isso o relatório é buscado via fetch (que não sofre essa restrição) e
 // aberto como Blob local, cujo Content-Type quem decide é o navegador.
-const FUNCTION_URL = SUPABASE_URL + "/functions/v1/portal";
 async function abrirRelatorio(caminho, accessToken) {
   const resp = await fetch(`${FUNCTION_URL}?path=${encodeURIComponent(caminho)}`, {
     headers: { Authorization: `Bearer ${accessToken}` },
@@ -128,45 +212,117 @@ async function abrirRelatorio(caminho, accessToken) {
   window.open(blobUrl, '_blank');
 }
 
-async function carregarRelatorios(accessToken) {
-  const principais = $('lista-principais');
-  principais.innerHTML = '';
-  for (const [nome, arq] of [['Dashboard', 'dashboard.html'], ['Operação', 'operacao.html']]) {
-    const a = document.createElement('a');
-    a.innerHTML = `${nome} <span class="data">abrir ▸</span>`;
-    a.onclick = () => abrirRelatorio(arq, accessToken);
-    principais.appendChild(a);
-  }
+async function buscarJson(caminho, accessToken) {
+  const resp = await fetch(`${FUNCTION_URL}?path=${encodeURIComponent(caminho)}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (!resp.ok) return null;
+  try { return JSON.parse(await resp.text()); } catch { return null; }
+}
 
-  // Acertos: um subdiretório por mês (AAAA-MM), cada um com Resumo.html.
-  const listaAc = $('lista-acertos');
-  listaAc.innerHTML = '';
-  const { data: meses, error } = await sb.storage.from('reports').list('acertos', { sortBy: { column: 'name', order: 'desc' } });
-  if (error || !meses || !meses.length) {
-    listaAc.innerHTML = '<div class="vazio">Nenhum acerto publicado ainda.</div>';
+async function carregarTudo(accessToken, minhaGeracao) {
+  $('tile-dashboard').onclick = () => abrirRelatorio('dashboard.html', accessToken);
+  $('tile-operacao').onclick = () => abrirRelatorio('operacao.html', accessToken);
+
+  // ── Acertos: mostra só o mês mais recente; meses antigos ficam num "ver mais" ──
+  const { data: meses } = await sb.storage.from('reports').list('acertos', { sortBy: { column: 'name', order: 'desc' } });
+  if (minhaGeracao !== geracaoAtual) return;
+  if (!meses || !meses.length) {
+    $('acertos-sub').textContent = 'Nenhum acerto publicado ainda';
+    $('tile-acertos').classList.add('disabled');
   } else {
-    for (const m of meses) {
-      const a = document.createElement('a');
-      a.innerHTML = `${m.name} <span class="data">Resumo ▸</span>`;
-      a.onclick = () => abrirRelatorio(`acertos/${m.name}/Resumo.html`, accessToken);
-      listaAc.appendChild(a);
+    const [ultimo, ...antigos] = meses;
+    $('acertos-sub').textContent = `Último: ${ultimo.name}`;
+    $('tile-acertos').onclick = (e) => {
+      if (e.target.closest('.link-menor') || e.target.closest('.lista-antigos')) return;
+      abrirRelatorio(`acertos/${ultimo.name}/Resumo.html`, accessToken);
+    };
+    if (antigos.length) {
+      $('acertos-toggle').style.display = 'inline-block';
+      const box = $('acertos-antigos');
+      box.innerHTML = antigos.map(m =>
+        `<a data-mes="${m.name}">${m.name} <span>Resumo ▸</span></a>`).join('');
+      box.querySelectorAll('a').forEach(a =>
+        a.onclick = (e) => { e.stopPropagation(); abrirRelatorio(`acertos/${a.dataset.mes}/Resumo.html`, accessToken); });
+      $('acertos-toggle').onclick = (e) => { e.stopPropagation(); box.classList.toggle('aberta'); };
     }
   }
 
-  // PriceLabs: pricelabs/daily-AAAA-MM-DD.html e pricelabs/historico-AAAA-MM-DD.html.
-  const listaPl = $('lista-pricelabs');
-  listaPl.innerHTML = '';
-  const { data: arqsPl, error: errPl } = await sb.storage.from('reports').list('pricelabs', { sortBy: { column: 'name', order: 'desc' } });
-  if (errPl || !arqsPl || !arqsPl.length) {
-    listaPl.innerHTML = '<div class="vazio">Nenhum relatório do PriceLabs publicado ainda.</div>';
+  // ── PriceLabs: separa históricos e diários, mostra só o mais recente de cada ──
+  const { data: arqsPl } = await sb.storage.from('reports').list('pricelabs', { sortBy: { column: 'name', order: 'desc' } });
+  if (minhaGeracao !== geracaoAtual) return;
+  const historicos = (arqsPl || []).filter(f => f.name.startsWith('historico-') && f.name.endsWith('.html'));
+  const diarios = (arqsPl || []).filter(f => f.name.startsWith('daily-') && f.name.endsWith('.json'));
+
+  if (!historicos.length) {
+    $('historico-sub').textContent = 'Nenhum relatório publicado ainda';
+    $('tile-historico').classList.add('disabled');
   } else {
-    for (const f of arqsPl.slice(0, 14)) {
-      const tipo = f.name.startsWith('daily-') ? 'Diário' : f.name.startsWith('historico-') ? 'Histórico' : f.name;
-      const data = f.name.replace(/^(daily|historico)-/, '').replace('.html', '');
-      const a = document.createElement('a');
-      a.innerHTML = `${tipo} — ${data} <span class="data">abrir ▸</span>`;
-      a.onclick = () => abrirRelatorio(`pricelabs/${f.name}`, accessToken);
-      listaPl.appendChild(a);
+    const [ultimoH, ...antigosH] = historicos;
+    const dataH = ultimoH.name.replace('historico-', '').replace('.html', '');
+    $('historico-sub').textContent = `Último: ${dataH} — real (Guesty) x previsão (PriceLabs)`;
+    $('tile-historico').onclick = (e) => {
+      if (e.target.closest('.link-menor') || e.target.closest('.lista-antigos')) return;
+      abrirRelatorio(`pricelabs/${ultimoH.name}`, accessToken);
+    };
+    if (antigosH.length) {
+      $('historico-toggle').style.display = 'inline-block';
+      const box = $('historico-antigos');
+      box.innerHTML = antigosH.slice(0, 10).map(f =>
+        `<a data-arq="${f.name}">${f.name.replace('historico-', '').replace('.html', '')} <span>abrir ▸</span></a>`).join('');
+      box.querySelectorAll('a').forEach(a =>
+        a.onclick = (e) => { e.stopPropagation(); abrirRelatorio(`pricelabs/${a.dataset.arq}`, accessToken); });
+      $('historico-toggle').onclick = (e) => { e.stopPropagation(); box.classList.toggle('aberta'); };
+    }
+  }
+
+  // ── Painel de KPIs do diário (sem abrir o relatório completo) ──
+  if (!diarios.length) {
+    $('kpi-data').textContent = 'Nenhum relatório diário publicado ainda';
+    $('kpi-corpo').innerHTML = '<div class="vazio">Assim que o PriceLabs diário rodar, os principais números aparecem aqui.</div>';
+  } else {
+    const resumo = await buscarJson(`pricelabs/${diarios[0].name}`, accessToken);
+    if (minhaGeracao !== geracaoAtual) return;
+    if (!resumo) {
+      $('kpi-data').textContent = 'Não consegui carregar o resumo de hoje';
+    } else {
+      $('kpi-data').textContent = `${resumo.data} · ${resumo.imoveis_total} imóveis`;
+      const gapOcc = (resumo.ocupacao_media_30d ?? 0) - (resumo.ocupacao_media_mercado_30d ?? 0);
+      $('kpi-corpo').innerHTML = `
+        <div class="kpi-grid">
+          <div class="kpi-item ${gapOcc < -5 ? 'crit' : gapOcc < 0 ? 'warn' : 'ok'}">
+            <div class="kval">${fmtPct(resumo.ocupacao_media_30d)}</div>
+            <div class="klabel">Ocupação 30d</div>
+          </div>
+          <div class="kpi-item">
+            <div class="kval">${fmtPct(resumo.ocupacao_media_mercado_30d)}</div>
+            <div class="klabel">Mercado 30d</div>
+          </div>
+          <div class="kpi-item ${resumo.imoveis_criticos > 0 ? 'crit' : 'ok'}">
+            <div class="kval">${resumo.imoveis_criticos}</div>
+            <div class="klabel">Críticos (&lt;30%)</div>
+          </div>
+          <div class="kpi-item ${resumo.promos_urgentes > 0 ? 'warn' : 'ok'}">
+            <div class="kval">${resumo.promos_aptas}</div>
+            <div class="klabel">Aptos p/ promoção</div>
+          </div>
+          <div class="kpi-item ${resumo.promos_urgentes > 0 ? 'crit' : 'ok'}">
+            <div class="kval">${resumo.promos_urgentes}</div>
+            <div class="klabel">Urgentes</div>
+          </div>
+          <div class="kpi-item ok">
+            <div class="kval">${fmtR(resumo.receita_potencial)}</div>
+            <div class="klabel">Receita potencial</div>
+          </div>
+        </div>
+        <div class="kpi-alertas">
+          <div class="al-titulo">Ocupação mais crítica nos próximos 7 dias</div>
+          ${(resumo.alertas || []).map(a =>
+            `<div class="al-item"><span class="al-nome">${a.nome} (${a.cidade || '—'})</span>
+             <span class="al-occ">${fmtPct(a.occ_7)} vs mkt ${fmtPct(a.mkt_7)}</span></div>`).join('')}
+        </div>
+        <div class="kpi-foot"><span class="link-menor" id="kpi-abrir-completo">ver relatório completo por e-mail →</span></div>`;
+      $('kpi-abrir-completo').onclick = () => abrirRelatorio(`pricelabs/${diarios[0].name.replace('.json', '.html')}`, accessToken);
     }
   }
 }
