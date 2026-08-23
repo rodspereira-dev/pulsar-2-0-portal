@@ -27,9 +27,19 @@ main{max-width:960px;margin:0 auto;padding:32px 20px 60px;width:100%;flex:1}
 #tela-login button{background:var(--red);color:#fff;border:none;border-radius:8px;padding:11px 18px;font-size:13px;
   font-weight:700;cursor:pointer;font-family:'Inter';margin-top:18px;width:100%}
 .erro{color:#ff6b6b;font-size:12px;margin-top:10px;display:none}
+.erro.sucesso{color:var(--green)}
 button.ghost{background:none;border:1px solid var(--border);color:var(--gray);border-radius:8px;padding:9px 16px;
   font-size:12px;cursor:pointer;font-family:'Inter'}
 button.ghost:hover{border-color:var(--gray);color:#fff}
+
+/* formulário de despesa (reaproveita o visual do login) */
+#painel-despesa label{display:block;font-size:12px;color:var(--gray);margin:14px 0 5px}
+#painel-despesa select,#painel-despesa input{width:100%;background:var(--card2);color:#fff;border:1px solid var(--border);
+  border-radius:8px;padding:11px 13px;font-family:'Inter';font-size:13px}
+#painel-despesa select:focus,#painel-despesa input:focus{outline:none;border-color:var(--red)}
+#painel-despesa button{background:var(--red);color:#fff;border:none;border-radius:8px;font-size:13px;
+  font-weight:700;cursor:pointer;font-family:'Inter';margin-top:18px}
+#despesa-seta.aberta{transform:rotate(90deg)}
 
 /* home */
 #tela-app{display:none}
@@ -121,6 +131,31 @@ footer{text-align:center;color:#444;font-size:11px;padding:20px}
         <span class="link-menor" id="historico-toggle" style="display:none">ver anteriores</span>
         <div class="lista-antigos" id="historico-antigos"></div>
       </div>
+      <div class="tile" id="tile-despesa">
+        <span class="tarrow" id="despesa-seta">▸</span>
+        <div class="tico">➕</div>
+        <div class="ttitle">Lançar Despesa</div>
+        <div class="tsub">Enxoval, obra, manutenção, outros</div>
+      </div>
+    </div>
+
+    <div class="card" id="painel-despesa" style="display:none">
+      <label>Imóvel</label>
+      <select id="desp-imovel"><option value="">carregando…</option></select>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><label>Tipo</label>
+          <select id="desp-tipo">
+            <option>Enxoval</option><option>Obra</option><option>Manutenção</option><option>Outros</option>
+          </select>
+        </div>
+        <div><label>Data</label><input id="desp-data" type="date"></div>
+      </div>
+      <label>Valor (R$)</label>
+      <input id="desp-valor" type="number" step="0.01" min="0" placeholder="0,00">
+      <label>Descrição (opcional)</label>
+      <input id="desp-descricao" type="text" placeholder="ex.: troca de colchão do quarto 2">
+      <div class="erro" id="desp-msg"></div>
+      <button id="desp-salvar" style="width:auto;padding:11px 22px">Salvar despesa</button>
     </div>
 
     <div class="secao-titulo">PriceLabs — Hoje</div>
@@ -218,6 +253,56 @@ async function buscarJson(caminho, accessToken) {
   });
   if (!resp.ok) return null;
   try { return JSON.parse(await resp.text()); } catch { return null; }
+}
+
+let despesaConfigurada = false;
+async function configurarFormularioDespesa(accessToken) {
+  $('tile-despesa').onclick = () => {
+    const painel = $('painel-despesa');
+    const abrir = painel.style.display === 'none';
+    painel.style.display = abrir ? 'block' : 'none';
+    $('despesa-seta').classList.toggle('aberta', abrir);
+  };
+  if (despesaConfigurada) return;   // dropdown de imóveis e submit só precisam ser ligados uma vez
+  despesaConfigurada = true;
+
+  $('desp-data').valueAsDate = new Date();
+
+  const resp = await fetch(`${FUNCTION_URL}?listings=1`, { headers: { Authorization: `Bearer ${accessToken}` } });
+  const imoveis = resp.ok ? await resp.json() : [];
+  const sel = $('desp-imovel');
+  sel.innerHTML = imoveis.length
+    ? imoveis.map(l => `<option value="${l.id}">${l.nickname || l.title}</option>`).join('')
+    : '<option value="">nenhum imóvel encontrado</option>';
+
+  $('desp-salvar').onclick = async () => {
+    const msg = $('desp-msg');
+    msg.classList.remove('sucesso');
+    msg.style.display = 'none';
+    const corpo = {
+      listing_id: $('desp-imovel').value,
+      data: $('desp-data').value,
+      tipo: $('desp-tipo').value,
+      descricao: $('desp-descricao').value.trim(),
+      valor: parseFloat($('desp-valor').value),
+    };
+    const r = await fetch(FUNCTION_URL, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(corpo),
+    });
+    const out = await r.json().catch(() => ({}));
+    if (!r.ok) {
+      msg.textContent = out.erro || 'Não consegui salvar — tenta de novo.';
+      msg.style.display = 'block';
+      return;
+    }
+    $('desp-valor').value = '';
+    $('desp-descricao').value = '';
+    msg.textContent = '✓ Despesa salva com sucesso.';
+    msg.classList.add('sucesso');
+    msg.style.display = 'block';
+  };
 }
 
 async function carregarTudo(accessToken, minhaGeracao) {
@@ -325,6 +410,8 @@ async function carregarTudo(accessToken, minhaGeracao) {
       $('kpi-abrir-completo').onclick = () => abrirRelatorio(`pricelabs/${diarios[0].name.replace('.json', '.html')}`, accessToken);
     }
   }
+
+  await configurarFormularioDespesa(accessToken);
 }
 
 sb.auth.onAuthStateChange(() => mostrarTela());
