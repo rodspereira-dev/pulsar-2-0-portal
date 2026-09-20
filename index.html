@@ -242,7 +242,17 @@ async function abrirRelatorio(caminho, accessToken) {
     alert('Não consegui abrir esse relatório: ' + (await resp.text()));
     return;
   }
-  const html = await resp.text();
+  let html = await resp.text();
+  // O Dashboard tem um botão "Gerar relatório" por imóvel que chama de volta
+  // esta function -- ele é aberto como Blob isolado (sem acesso a
+  // FUNCTION_URL/token do portal), então repassamos os dois aqui, só nesta
+  // aba, antes de criar o Blob.
+  if (caminho === 'dashboard.html') {
+    html = html.replace(
+      'window.__PULSAR_FN__=null;window.__PULSAR_TOKEN__=null;',
+      `window.__PULSAR_FN__=${JSON.stringify(FUNCTION_URL)};window.__PULSAR_TOKEN__=${JSON.stringify(accessToken)};`,
+    );
+  }
   const blobUrl = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
   window.open(blobUrl, '_blank');
 }
