@@ -90,6 +90,73 @@ button.ghost:hover{border-color:var(--gray);color:var(--txt)}
 .kpi-foot{margin-top:16px;font-size:11px}
 .vazio{color:#555;font-size:12px;padding:8px 0}
 footer{text-align:center;color:#444;font-size:11px;padding:20px}
+
+/* abas da página inicial */
+main.largo{max-width:1440px}
+.abas{display:flex;gap:4px;margin-bottom:22px;border-bottom:1px solid var(--border)}
+.aba{background:none;border:none;color:var(--gray);font:600 13px 'Inter',sans-serif;padding:10px 14px;cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px}
+.aba:hover{color:var(--txt)}
+.aba.on{color:var(--txt);border-bottom-color:var(--red)}
+.aba .badge{background:var(--red);color:#fff;border-radius:999px;font-size:10px;font-weight:800;padding:1px 7px;margin-left:6px}
+.aba .badge:empty{display:none}
+
+/* Central de Tarefas (quadro por fase) */
+.tf-barra{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.tf-barra select,.tf-barra input[type=search]{background:var(--card2);color:var(--txt);border:1px solid var(--border);
+  border-radius:8px;padding:8px 10px;font:13px 'Inter',sans-serif}
+.tf-barra input[type=search]{min-width:200px}
+.tf-barra label{font-size:12px;color:var(--gray);display:flex;align-items:center;gap:6px;cursor:pointer}
+.tf-barra .dir{margin-left:auto;font-size:11px;color:var(--gray)}
+.btn-pri{background:var(--red);color:#fff;border:none;border-radius:8px;padding:9px 14px;font:700 13px 'Inter',sans-serif;cursor:pointer}
+.btn-sec{background:var(--card2);color:var(--txt);border:1px solid var(--border);border-radius:8px;padding:8px 12px;
+  font:600 12px 'Inter',sans-serif;cursor:pointer}
+.btn-sec:hover{border-color:var(--gray)}
+.quadro{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,1fr);gap:12px;overflow-x:auto;padding-bottom:8px}
+.coluna{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px;min-height:220px;
+  display:flex;flex-direction:column;gap:8px}
+.coluna.sobre{border-color:var(--red);background:var(--card2)}
+.col-cab{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.7px;color:var(--gray);padding:2px 4px 4px}
+.col-cab .n{background:var(--card2);border-radius:999px;padding:1px 8px;font-size:11px;color:var(--txt)}
+.cartao{background:var(--card2);border:1px solid var(--border);border-left:3px solid var(--gray2);border-radius:8px;
+  padding:10px 11px;cursor:pointer;transition:border-color .12s}
+.cartao:hover{border-color:var(--red)}
+.cartao.p-alta{border-left-color:var(--red)}.cartao.p-media{border-left-color:var(--yellow)}.cartao.p-baixa{border-left-color:var(--gray2)}
+.cartao.arrastando{opacity:.45}
+.cartao .cat{font-size:10px;font-weight:700;text-transform:uppercase;color:var(--gray);letter-spacing:.5px}
+.cartao .tit{font-size:13px;font-weight:600;margin:4px 0 9px;line-height:1.35}
+.cartao .rod{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:11px;color:var(--gray)}
+.cartao .rod .esq{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip-p{font-size:10px;font-weight:700;border-radius:4px;padding:1px 6px;border:1px solid var(--border)}
+.chip-p.alta{color:var(--red);border-color:var(--red)}.chip-p.media{color:var(--yellow);border-color:var(--yellow)}
+.av{width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-size:10px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.av.sem{background:none;color:var(--gray);border:1px dashed var(--gray2)}
+.atrasada{color:var(--red);font-weight:700}
+.col-vazia{font-size:12px;color:var(--gray2);text-align:center;padding:18px 6px}
+dialog#tf-modal{margin:auto;background:var(--card);color:var(--txt);border:1px solid var(--border);border-radius:14px;padding:0;
+  width:min(760px,94vw);max-height:90vh}
+dialog#tf-modal::backdrop{background:rgba(0,0,0,.55)}
+.tf-mcab{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+.tf-mcab b{font-size:14px}
+.tf-mcorpo{padding:16px 20px;overflow-y:auto;max-height:calc(90vh - 130px)}
+.tf-mcorpo label{display:block;font-size:11px;color:var(--gray);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.5px}
+.tf-mcorpo input,.tf-mcorpo select,.tf-mcorpo textarea{width:100%;background:var(--card2);color:var(--txt);
+  border:1px solid var(--border);border-radius:8px;padding:9px 11px;font:13px 'Inter',sans-serif}
+.tf-mcorpo textarea{resize:vertical;min-height:90px;line-height:1.45}
+.tf-mcorpo input:focus,.tf-mcorpo select:focus,.tf-mcorpo textarea:focus{outline:none;border-color:var(--red)}
+.tf-grade{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 12px}
+.tf-mrod{display:flex;justify-content:space-between;gap:8px;padding:12px 20px;border-top:1px solid var(--border);flex-wrap:wrap}
+.tf-hist{margin-top:18px;border-top:1px solid var(--border);padding-top:12px}
+.tf-hist h4{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.tf-ev{font-size:12px;padding:7px 0;border-bottom:1px dashed var(--border);line-height:1.45}
+.tf-ev .q{font-weight:700}.tf-ev .d{color:var(--gray);font-size:11px;margin-left:6px}
+.tf-ev.com{white-space:pre-wrap}
+.tf-ev.com .txt{display:block;margin-top:3px}
+.tf-coment{display:flex;gap:8px;margin-top:10px;align-items:flex-start}
+.tf-coment textarea{min-height:44px}
+.tf-msg{font-size:12px;color:var(--red);margin-top:8px}
 </style>
 <style>
 .btn-tema{position:fixed;right:16px;bottom:16px;z-index:9999;width:38px;height:38px;border-radius:50%;
@@ -118,6 +185,11 @@ footer{text-align:center;color:#444;font-size:11px;padding:20px}
   </div>
 
   <div id="tela-app">
+    <div class="abas">
+      <button class="aba on" data-aba="relatorios">Relatórios</button>
+      <button class="aba" data-aba="tarefas">Tarefas<span class="badge" id="tf-badge"></span></button>
+    </div>
+    <div id="aba-relatorios">
     <div class="secao-titulo">Relatórios</div>
     <div class="tiles">
       <a class="tile" id="tile-dashboard">
@@ -186,6 +258,22 @@ footer{text-align:center;color:#444;font-size:11px;padding:20px}
       <div id="kpi-corpo"></div>
     </div>
 
+    </div>
+
+    <div id="aba-tarefas" style="display:none">
+      <div class="tf-barra">
+        <button class="btn-pri" id="tf-nova">+ Nova tarefa</button>
+        <select id="tf-resp"></select>
+        <select id="tf-cat"></select>
+        <input type="search" id="tf-busca" placeholder="Buscar tarefa">
+        <label><input type="checkbox" id="tf-tudo"> Concluídas antigas e canceladas</label>
+        <button class="btn-sec" id="tf-atualizar" title="Buscar de novo">↻</button>
+        <span class="dir" id="tf-resumo"></span>
+      </div>
+      <div class="quadro" id="tf-quadro"><div class="vazio">carregando…</div></div>
+    </div>
+    <dialog id="tf-modal"></dialog>
+
     <button class="ghost" id="btn-sair" style="margin-top:24px">Sair</button>
   </div>
 
@@ -219,6 +307,7 @@ async function mostrarTela() {
     $('tela-login').style.display = 'none';
     $('tela-app').style.display = 'block';
     $('quem').textContent = session.user.email;
+    if (TF.eu !== session.user.email) tarefasEntrar(session.user.email);
     await carregarTudo(session.access_token, minhaGeracao);
   } else {
     $('tela-login').style.display = 'block';
@@ -442,6 +531,248 @@ async function carregarTudo(accessToken, minhaGeracao) {
 
   await configurarFormularioDespesa(accessToken);
 }
+
+
+// ── Central de Tarefas (aba "Tarefas") ──
+// Quadro por fase sobre as tabelas tarefas/tarefas_eventos (migracao_tarefas.sql),
+// lidas e gravadas direto com o login do portal (RLS: só usuários logados).
+// Criado por, datas e o histórico de fase/responsável são gravados pelo banco.
+const FASES = [['a_fazer', 'A fazer'], ['andamento', 'Em andamento'], ['aguardando', 'Aguardando terceiro'], ['concluido', 'Concluído']];
+const NOME_FASE = {a_fazer: 'A fazer', andamento: 'Em andamento', aguardando: 'Aguardando terceiro', concluido: 'Concluído', cancelado: 'Cancelado'};
+const PRIOS = [['alta', 'Alta'], ['media', 'Média'], ['baixa', 'Baixa']];
+const CATS = ['Sistema', 'Cadastro', 'Financeiro', 'Operação', 'Hub360', 'Comercial', 'Outros'];
+const TF = {lista: [], equipe: [], eu: '', carregado: 0, aberta: null,
+            filtro: {resp: '', cat: '', busca: '', tudo: false}};
+const escT = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const nomeDe = e => e ? e.split('@')[0] : '';
+const iniciais = e => { const p = nomeDe(e).replace(/[._-]+/g, ' ').trim().split(/\s+/);
+  return ((p[0] || '')[0] || '').concat((p[1] || '')[0] || '').toUpperCase() || '?'; };
+const hojeISO = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+const dataBR = d => d ? `${d.slice(8, 10)}/${d.slice(5, 7)}` : '';
+const quandoBR = iso => { const d = new Date(iso);
+  return d.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'}) + ' ' + d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}); };
+const aberta = t => t.fase !== 'concluido' && t.fase !== 'cancelado';
+const atrasada = t => aberta(t) && t.prazo && t.prazo < hojeISO();
+
+function abrirAba(qual) {
+  document.querySelectorAll('.aba').forEach(b => b.classList.toggle('on', b.dataset.aba === qual));
+  $('aba-relatorios').style.display = qual === 'relatorios' ? '' : 'none';
+  $('aba-tarefas').style.display = qual === 'tarefas' ? '' : 'none';
+  document.querySelector('main').classList.toggle('largo', qual === 'tarefas');
+  try { localStorage.setItem('abaPortal', qual); } catch (e) {}
+  if (qual === 'tarefas' && Date.now() - TF.carregado > 30000) carregarTarefas();
+}
+document.querySelectorAll('.aba').forEach(b => b.onclick = () => abrirAba(b.dataset.aba));
+
+async function tarefasEntrar(email) {
+  TF.eu = email;
+  let a = null; try { a = localStorage.getItem('abaPortal'); } catch (e) {}
+  abrirAba(a === 'tarefas' ? 'tarefas' : 'relatorios');
+  if (a !== 'tarefas') carregarTarefas();  // para o contador da aba
+}
+
+async function carregarTarefas() {
+  TF.carregado = Date.now();
+  const [t, e] = await Promise.all([
+    sb.from('tarefas').select('*').order('criado_em', {ascending: false}),
+    TF.equipe.length ? Promise.resolve({data: null}) : sb.rpc('listar_equipe')]);
+  if (t.error) {
+    TF.carregado = 0;
+    $('tf-quadro').innerHTML = `<div class="vazio">${/schema cache|does not exist/.test(t.error.message)
+      ? 'A Central de Tarefas ainda não existe no Supabase — rode <b>migracao_tarefas.sql</b> no SQL Editor.'
+      : 'Não consegui carregar as tarefas: ' + escT(t.error.message)}</div>`;
+    return;
+  }
+  TF.lista = t.data || [];
+  if (e && e.data) TF.equipe = e.data.map(x => x.email);
+  preencherFiltros();
+  renderTarefas();
+}
+
+function pessoas() {
+  return [...new Set([...TF.equipe, ...TF.lista.map(t => t.responsavel).filter(Boolean)])].sort();
+}
+
+function preencherFiltros() {
+  const sel = $('tf-resp'), atual = sel.value;
+  sel.innerHTML = '<option value="">Todos os responsáveis</option><option value="__eu">Minhas tarefas</option>' +
+    '<option value="__ninguem">Sem responsável</option>' +
+    pessoas().map(p => `<option value="${escT(p)}">${escT(nomeDe(p))}</option>`).join('');
+  sel.value = atual;
+  const cat = $('tf-cat'), atualC = cat.value;
+  cat.innerHTML = '<option value="">Todas as categorias</option>' + CATS.map(c => `<option>${c}</option>`).join('');
+  cat.value = atualC;
+}
+
+function filtradas() {
+  const f = TF.filtro, q = f.busca.trim().toLowerCase(), lim = Date.now() - 30 * 864e5;
+  return TF.lista.filter(t =>
+    (f.tudo || t.fase !== 'cancelado') &&
+    (!f.resp || (f.resp === '__eu' ? t.responsavel === TF.eu : f.resp === '__ninguem' ? !t.responsavel : t.responsavel === f.resp)) &&
+    (!f.cat || t.categoria === f.cat) &&
+    (!q || `${t.titulo} ${t.descricao || ''} ${t.imovel || ''}`.toLowerCase().includes(q)) &&
+    (f.tudo || t.fase !== 'concluido' || new Date(t.concluido_em || t.atualizado_em).getTime() > lim));
+}
+
+function renderTarefas() {
+  const minhas = TF.lista.filter(t => aberta(t) && t.responsavel === TF.eu).length;
+  $('tf-badge').textContent = minhas || '';
+  const vis = filtradas();
+  const peso = {alta: 0, media: 1, baixa: 2};
+  const ord = (a, b) => (peso[a.prioridade] - peso[b.prioridade]) ||
+    ((a.prazo || '9999') < (b.prazo || '9999') ? -1 : (a.prazo || '9999') > (b.prazo || '9999') ? 1 : 0) ||
+    (a.criado_em < b.criado_em ? -1 : 1);
+  const fases = TF.filtro.tudo ? [...FASES, ['cancelado', 'Cancelado']] : FASES;
+  $('tf-quadro').innerHTML = fases.map(([k, nome]) => {
+    const cs = vis.filter(t => t.fase === k).sort(ord);
+    return `<div class="coluna" data-fase="${k}"><div class="col-cab"><span>${nome}</span><span class="n">${cs.length}</span></div>` +
+      (cs.length ? cs.map(cartao).join('') : '<div class="col-vazia">Arraste uma tarefa para cá</div>') + '</div>';
+  }).join('');
+  const abertas = TF.lista.filter(aberta), atr = abertas.filter(atrasada).length;
+  $('tf-resumo').textContent = `${abertas.length} abertas · ${abertas.filter(t => !t.responsavel).length} sem responsável` +
+    (atr ? ` · ${atr} atrasada${atr > 1 ? 's' : ''}` : '');
+  ligarArrastar();
+}
+
+function cartao(t) {
+  const prazo = t.prazo ? `<span class="${atrasada(t) ? 'atrasada' : ''}" title="Prazo">📅 ${dataBR(t.prazo)}</span>` : '';
+  const pr = t.prioridade !== 'baixa' ? `<span class="chip-p ${t.prioridade}">${t.prioridade === 'alta' ? 'Alta' : 'Média'}</span>` : '';
+  const av = t.responsavel ? `<span class="av" title="${escT(t.responsavel)}">${escT(iniciais(t.responsavel))}</span>`
+                           : '<span class="av sem" title="Sem responsável">?</span>';
+  return `<div class="cartao p-${t.prioridade}" draggable="true" data-id="${t.id}">` +
+    `<div class="cat">${escT(t.categoria || 'Sem categoria')}${t.imovel ? ' · ' + escT(t.imovel) : ''}</div>` +
+    `<div class="tit">${escT(t.titulo)}</div>` +
+    `<div class="rod"><span class="esq">${pr}${prazo}</span>${av}</div></div>`;
+}
+
+function ligarArrastar() {
+  document.querySelectorAll('.cartao').forEach(c => {
+    c.onclick = () => abrirTarefa(+c.dataset.id);
+    c.ondragstart = ev => { ev.dataTransfer.setData('text/plain', c.dataset.id); c.classList.add('arrastando'); };
+    c.ondragend = () => c.classList.remove('arrastando');
+  });
+  document.querySelectorAll('.coluna').forEach(col => {
+    col.ondragover = ev => { ev.preventDefault(); col.classList.add('sobre'); };
+    col.ondragleave = () => col.classList.remove('sobre');
+    col.ondrop = ev => { ev.preventDefault(); col.classList.remove('sobre');
+      moverTarefa(+ev.dataTransfer.getData('text/plain'), col.dataset.fase); };
+  });
+}
+
+async function moverTarefa(id, fase) {
+  const t = TF.lista.find(x => x.id === id);
+  if (!t || t.fase === fase) return;
+  const antes = t.fase;
+  t.fase = fase; renderTarefas();
+  const {data, error} = await sb.from('tarefas').update({fase}).eq('id', id).select().single();
+  if (error) { t.fase = antes; renderTarefas(); alert('Não foi possível mover: ' + error.message); return; }
+  Object.assign(t, data); renderTarefas();
+}
+
+function opcoes(lista, atual) {
+  return lista.map(([v, n]) => `<option value="${escT(v)}" ${v === atual ? 'selected' : ''}>${escT(n)}</option>`).join('');
+}
+
+async function abrirTarefa(id) {
+  const t = id ? TF.lista.find(x => x.id === id) : null;
+  TF.aberta = t ? t.id : null;
+  const v = t || {titulo: '', descricao: '', fase: 'a_fazer', prioridade: 'media', categoria: '', responsavel: '', prazo: '', imovel: ''};
+  $('tf-modal').innerHTML =
+    `<div class="tf-mcab"><b>${t ? 'Tarefa #' + t.id : 'Nova tarefa'}</b><button class="btn-sec" id="tf-fechar">Fechar</button></div>` +
+    `<div class="tf-mcorpo">` +
+    `<label>Título</label><input id="tf-titulo" maxlength="200" value="${escT(v.titulo)}" placeholder="O que precisa ser feito?">` +
+    `<label>Descrição</label><textarea id="tf-desc" placeholder="Contexto, passos, links…">${escT(v.descricao || '')}</textarea>` +
+    `<div class="tf-grade">` +
+    `<div><label>Fase</label><select id="tf-fase">${opcoes(Object.entries(NOME_FASE), v.fase)}</select></div>` +
+    `<div><label>Prioridade</label><select id="tf-prio">${opcoes(PRIOS, v.prioridade)}</select></div>` +
+    `<div><label>Categoria</label><select id="tf-categ"><option value="">—</option>${opcoes(CATS.map(c => [c, c]), v.categoria)}</select></div>` +
+    `<div><label>Responsável</label><select id="tf-respon"><option value="">Sem responsável</option>` +
+      `${opcoes(pessoas().map(p => [p, nomeDe(p)]), v.responsavel)}</select></div>` +
+    `<div><label>Prazo</label><input id="tf-prazo" type="date" value="${escT(v.prazo || '')}"></div>` +
+    `<div><label>Imóvel (opcional)</label><input id="tf-imovel" value="${escT(v.imovel || '')}" placeholder="ex.: AP2003"></div>` +
+    `</div><div class="tf-msg" id="tf-msg"></div>` +
+    (t ? `<div class="tf-hist"><h4>Histórico e comentários</h4><div id="tf-eventos"><div class="vazio">carregando…</div></div>` +
+         `<div class="tf-coment"><textarea id="tf-com" placeholder="Escreva um comentário ou atualização…"></textarea>` +
+         `<button class="btn-sec" id="tf-comentar">Comentar</button></div></div>` : '') +
+    `<div style="font-size:11px;color:var(--gray);margin-top:12px">${t ? `Criada por ${escT(nomeDe(t.criado_por) || '—')} em ${quandoBR(t.criado_em)}` +
+      (t.concluido_em ? ` · concluída em ${quandoBR(t.concluido_em)}` : '') : ''}</div>` +
+    `</div><div class="tf-mrod"><span>${t && t.fase !== 'cancelado' ? '<button class="btn-sec" id="tf-cancelar">Cancelar tarefa</button>' : ''}</span>` +
+    `<span style="display:flex;gap:8px">${!t || t.responsavel !== TF.eu ? '<button class="btn-sec" id="tf-pegar">Atribuir a mim</button>' : ''}` +
+    `<button class="btn-pri" id="tf-salvar">${t ? 'Salvar' : 'Criar tarefa'}</button></span></div>`;
+  const m = $('tf-modal');
+  if (!m.open) m.showModal();
+  $('tf-fechar').onclick = () => m.close();
+  $('tf-salvar').onclick = () => salvarTarefa(t);
+  if ($('tf-pegar')) $('tf-pegar').onclick = () => {
+    const s = $('tf-respon');
+    if (![...s.options].some(o => o.value === TF.eu)) s.add(new Option(nomeDe(TF.eu), TF.eu));
+    s.value = TF.eu; salvarTarefa(t);
+  };
+  if ($('tf-cancelar')) $('tf-cancelar').onclick = () => {
+    if (confirm('Cancelar esta tarefa? Ela sai do quadro (dá para ver marcando "Concluídas antigas e canceladas").')) {
+      $('tf-fase').value = 'cancelado'; salvarTarefa(t);
+    }
+  };
+  if (t) { $('tf-comentar').onclick = () => comentar(t.id); carregarEventos(t.id); }
+  else setTimeout(() => $('tf-titulo').focus(), 50);
+}
+
+async function salvarTarefa(t) {
+  const dados = {
+    titulo: $('tf-titulo').value.trim(), descricao: $('tf-desc').value.trim() || null,
+    fase: $('tf-fase').value, prioridade: $('tf-prio').value, categoria: $('tf-categ').value || null,
+    responsavel: $('tf-respon').value || null, prazo: $('tf-prazo').value || null, imovel: $('tf-imovel').value.trim() || null};
+  if (!dados.titulo) { $('tf-msg').textContent = 'Dê um título para a tarefa.'; return; }
+  $('tf-salvar').disabled = true;
+  let r;
+  if (t) {
+    const mudou = {};
+    for (const k in dados) if ((dados[k] ?? null) !== (t[k] ?? null)) mudou[k] = dados[k];
+    if (!Object.keys(mudou).length) { $('tf-modal').close(); return; }
+    r = await sb.from('tarefas').update(mudou).eq('id', t.id).select().single();
+  } else {
+    r = await sb.from('tarefas').insert(dados).select().single();
+  }
+  if (r.error) { $('tf-salvar').disabled = false; $('tf-msg').textContent = 'Não foi possível salvar: ' + r.error.message; return; }
+  if (t) Object.assign(t, r.data); else TF.lista.unshift(r.data);
+  $('tf-modal').close();
+  preencherFiltros(); renderTarefas();
+}
+
+async function carregarEventos(id) {
+  const {data, error} = await sb.from('tarefas_eventos').select('*').eq('tarefa_id', id).order('quando');
+  if (TF.aberta !== id || !$('tf-eventos')) return;
+  if (error) { $('tf-eventos').innerHTML = `<div class="vazio">${escT(error.message)}</div>`; return; }
+  $('tf-eventos').innerHTML = (data || []).map(ev => {
+    const q = `<span class="q">${escT(nomeDe(ev.quem) || ev.quem || '—')}</span>`, d = `<span class="d">${quandoBR(ev.quando)}</span>`;
+    if (ev.tipo === 'comentario') return `<div class="tf-ev com">${q}${d}<span class="txt">${escT(ev.texto)}</span></div>`;
+    let txt = '';
+    if (ev.tipo === 'criada') txt = 'criou a tarefa';
+    else if (ev.tipo === 'fase') { const [a, b] = String(ev.texto || '').split('→'); txt = `moveu de <b>${escT(NOME_FASE[a] || a)}</b> para <b>${escT(NOME_FASE[b] || b)}</b>`; }
+    else if (ev.tipo === 'responsavel') txt = ev.texto ? `atribuiu a <b>${escT(nomeDe(ev.texto))}</b>` : 'removeu o responsável';
+    else txt = escT(ev.texto || ev.tipo);
+    return `<div class="tf-ev">${q} ${txt}${d}</div>`;
+  }).join('') || '<div class="vazio">Sem histórico.</div>';
+}
+
+async function comentar(id) {
+  const texto = $('tf-com').value.trim();
+  if (!texto) return;
+  $('tf-comentar').disabled = true;
+  const {error} = await sb.from('tarefas_eventos').insert({tarefa_id: id, tipo: 'comentario', texto});
+  $('tf-comentar').disabled = false;
+  if (error) { alert('Não foi possível comentar: ' + error.message); return; }
+  $('tf-com').value = '';
+  carregarEventos(id);
+}
+
+$('tf-nova').onclick = () => abrirTarefa(null);
+$('tf-atualizar').onclick = () => carregarTarefas();
+$('tf-resp').onchange = e => { TF.filtro.resp = e.target.value; renderTarefas(); };
+$('tf-cat').onchange = e => { TF.filtro.cat = e.target.value; renderTarefas(); };
+$('tf-busca').oninput = e => { TF.filtro.busca = e.target.value; renderTarefas(); };
+$('tf-tudo').onchange = e => { TF.filtro.tudo = e.target.checked; renderTarefas(); };
+$('tf-modal').addEventListener('click', e => { if (e.target === $('tf-modal')) $('tf-modal').close(); });
 
 sb.auth.onAuthStateChange(() => mostrarTela());
 mostrarTela();
