@@ -539,7 +539,7 @@ async function carregarTudo(accessToken, minhaGeracao) {
 const FASES = [['a_fazer', 'A fazer'], ['andamento', 'Em andamento'], ['aguardando', 'Aguardando terceiro'], ['concluido', 'Concluído']];
 const NOME_FASE = {a_fazer: 'A fazer', andamento: 'Em andamento', aguardando: 'Aguardando terceiro', concluido: 'Concluído', cancelado: 'Cancelado'};
 const PRIOS = [['alta', 'Alta'], ['media', 'Média'], ['baixa', 'Baixa']];
-const CATS = ['Sistema', 'Cadastro', 'Financeiro', 'Operação', 'Hub360', 'Comercial', 'Outros'];
+const CATS = ['Manutenção', 'Limpeza', 'Enxoval e itens', 'Anúncio', 'Atendimento', 'Operação', 'Hub360', 'Sistema', 'Cadastro', 'Financeiro', 'Comercial', 'Outros'];
 const TF = {lista: [], equipe: [], eu: '', carregado: 0, aberta: null,
             filtro: {resp: '', cat: '', busca: '', tudo: false}};
 const escT = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
