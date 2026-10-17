@@ -247,7 +247,9 @@ async function abrirRelatorio(caminho, accessToken) {
   // esta function -- ele é aberto como Blob isolado (sem acesso a
   // FUNCTION_URL/token do portal), então repassamos os dois aqui, só nesta
   // aba, antes de criar o Blob.
-  if (caminho === 'dashboard.html') {
+  // O Resumo dos Acertos usa o mesmo login (status ao vivo, marcar pago,
+  // gerar/enviar relatório).
+  if (caminho === 'dashboard.html' || /^acertos\/[0-9]{4}-[0-9]{2}\/Resumo\.html$/.test(caminho)) {
     html = html.replace(
       'window.__PULSAR_FN__=null;window.__PULSAR_TOKEN__=null;',
       `window.__PULSAR_FN__=${JSON.stringify(FUNCTION_URL)};window.__PULSAR_TOKEN__=${JSON.stringify(accessToken)};`,
